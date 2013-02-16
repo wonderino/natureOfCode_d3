@@ -13,17 +13,30 @@ var svg = d3.select("#trad_rand_walk")
     //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-var data = [{x:width/2, y:height/2}];
 
 function Walker() {
-  this.x = width/2;
-  this.y = height/2;
+  this.path = [{x:width/2, y:height/2}];
 
+  this.line = d3.svg.line()
+      .x(function(d) {return d.x})
+      .y(function(d) {return d.y})
+      .interpolate("linear");
+
+  this.svgLine = svg.append("path")
+          .attr("d", this.line(this.path))
+          .style("border-width", 1.0)
+          .style("stroke", "black")
+          .style("fill-opacity", 0);
+  
   this.step = function() {
     var stepX = Math.floor(Math.random()*3.0 - 1.0);
     var stepY = Math.floor(Math.random()*3.0 - 1.0);
-    this.x+= stepX;
-    this.y+= stepY;
+   
+
+    var tempX = this.path[this.path.length-1].x + stepX;
+    var tempY = this.path[this.path.length-1].y + stepY;
+
+    this.path.push({x:tempX, y:tempY});
 
     /*
     var choice = Math.floor(Math.random()*4.0);
@@ -38,12 +51,11 @@ function Walker() {
     }*/
   }
   this.display = function() {
-    svg.append("rect")
-      .attr("x", this.x).attr("y", this.y)
-      .attr("width", 1).attr("height", 1)
-      .style("fill", "black").style("stroke-width", 0);
+    this.svgLine.attr("d", this.line(this.path));
   }
 }
+
+
 
 var walker = new Walker();
 walker.display();

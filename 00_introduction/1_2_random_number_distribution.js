@@ -31,7 +31,7 @@ var rects = svg.selectAll(".rect")
 d3.timer(function() {
   var index = Math.floor(Math.random() * randomCounts.length);
   randomCounts[index] += 1;
-  console.log(index);
+  
 
   rects.data(randomCounts)
     .attr("y", function(d) {return height - d})
