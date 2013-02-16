@@ -4,7 +4,7 @@ var margin = {top: 40, right: 40, bottom: 40, left: 40},
     start = Date.now(),
     speed = 0.25;
     
-var svg = d3.select("#trad_rand_walk")
+var svg = d3.select("#walk_to_right")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -29,26 +29,16 @@ function Walker() {
           .style("fill-opacity", 0);
   
   this.step = function() {
-    var stepX = Math.floor(Math.random()*3.0 - 1.0);
-    var stepY = Math.floor(Math.random()*3.0 - 1.0);
-   
+    var r = Math.random();
+    var curPos = this.path[this.path.length-1];
+    var newPos = {x:curPos.x, y:curPos.y};
 
-    var tempX = this.path[this.path.length-1].x + stepX;
-    var tempY = this.path[this.path.length-1].y + stepY;
+    if (r < 0.4) newPos.x ++;
+    else if (r < 0.6) newPos.x--;
+    else if (r < 0.8) newPos.y++;
+    else newPos.y--;
 
-    this.path.push({x:tempX, y:tempY});
-
-    /*
-    var choice = Math.floor(Math.random()*4.0);
-    if (choice==0) {
-      this.x++;
-    } else if (choice == 1) {
-      this.x--;
-    } else if (choice == 2) {
-      this.y++;
-    } else {
-      this.y--;
-    }*/
+    this.path.push(newPos);
   }
   this.display = function() {
     this.svgLine.attr("d", this.line(this.path));
