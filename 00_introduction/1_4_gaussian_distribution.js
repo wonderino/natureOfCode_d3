@@ -42,10 +42,10 @@ function Walker() {
 
   this.step = function() {
     var num = rnd_bmt();
-    var sd = 60;
+    var sd = 80;
     var mean = width/2;
 
-    var x = sd * num + mean;
+    var x = Math.floor(sd * num + mean) - 0.5;
 
     this.path.push(x);
   }
