@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 #OS jnk files
 [Tt]humbs.db
-*.DS_Store
-=======
 lightgl/*
 *.DS_Store
-[Tt]humb.db
->>>>>>> change .gitignore
+
